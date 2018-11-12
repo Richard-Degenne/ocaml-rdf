@@ -11,3 +11,4 @@ depends: [
   "alcotest"{with-test}
 ]
 build: ["dune" "build" "-p" "rdf"]
+build-test: ["dune" "runtest"]
