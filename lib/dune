@@ -1,0 +1,4 @@
+(library
+  (name rdf)
+  (public_name rdf)
+)

@@ -1,0 +1,12 @@
+opam-version: "2.0"
+name: "rdf"
+maintainer: "Richard Degenne <richdeg2@gmail.com>"
+version: "dev"
+license: "GPL"
+depends: [
+  "ocaml"
+  "uri"
+  "dune"{build}
+  "alcotest"{with-test}
+]
+build: ["dune" "build" "-p" "rdf"]
