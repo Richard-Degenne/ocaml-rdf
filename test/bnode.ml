@@ -12,7 +12,6 @@ let test_equal_false () =
   let other_bnode = Rdf.Bnode.of_string "b" in
   Alcotest.(check bool) "false" false (Rdf.Bnode.equal bnode other_bnode)
 
-
 let test_suite = [
   "to_string", `Quick, test_to_string;
   "equal true", `Quick, test_equal_true;

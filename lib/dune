@@ -1,5 +1,5 @@
 (library
   (name rdf)
   (public_name rdf)
-  (libraries uri)
+  (libraries uuidm uri)
 )
