@@ -1,11 +1,12 @@
-type t = string
+type internal = string
+type t = [`Bnode of internal]
 
-let equal = String.equal
+let equal (`Bnode b1) (`Bnode b2) = String.equal b1 b2
 
-let of_string id = id
-
-let to_string t =
-  Printf.sprintf "_:%s" t
+let of_string b = `Bnode b
 
 let create () =
-  of_string (Uuidm.v `V4 |> Uuidm.to_string)
+  `Bnode (Uuidm.(v `V4 |> to_string))
+
+let to_string (`Bnode t) =
+  Printf.sprintf "_:%s" t
