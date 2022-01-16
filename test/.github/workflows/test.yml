@@ -1,0 +1,25 @@
+---
+on:
+  - push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Cache OCaml
+        id: cache-ocaml
+        uses: actions/cache@v2
+        with:
+          path: ~/.opam
+          key: ${{ runner.os }}-ocaml
+      - name: Set up OCaml
+        if: steps.cache-ocaml.outputs.cache-hit != true
+        uses: ocaml/setup-ocaml@v1.1.11
+      - run: opam install . --deps-only --with-test
+        name: Install dependencies
+      - run: opam exec -- dune build
+        name: Build
+      - run: opam exec -- dune runtest
+        name: Run tests
