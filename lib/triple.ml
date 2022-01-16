@@ -13,3 +13,5 @@ let create subject predicate object_ = {subject; predicate; object_}
 let subject t = t.subject
 let predicate t = t.predicate
 let object_ t = t.object_
+
+let compare = compare

@@ -5,6 +5,9 @@ exception Invalid_datatype
 
 val create : string -> ?language : string -> Iri.t -> [> t]
 
+val equal : t -> t -> bool
+val compare : t -> t -> int
+
 val value : t -> string
 val datatype : t -> Iri.t
 val language : t -> string option
