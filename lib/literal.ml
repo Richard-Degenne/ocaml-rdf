@@ -23,6 +23,14 @@ let value (`Literal l) = l.value
 let datatype (`Literal l) = l.datatype
 let language (`Literal l) = l.language
 
+let equal l1 l2 =
+  String.equal (value l1) (value l2) &&
+    Iri.equal (datatype l1) (datatype l2) &&
+    Option.equal String.equal (language l1) (language l2)
+
+let compare = compare
+
+
 let to_string = value
 
 let of_string ?language value =

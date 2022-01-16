@@ -8,3 +8,5 @@ val create : subject -> Iri.t -> object_ -> t
 val subject : t -> subject
 val predicate : t -> Iri.t
 val object_ : t -> object_
+
+val compare : t -> t -> int
