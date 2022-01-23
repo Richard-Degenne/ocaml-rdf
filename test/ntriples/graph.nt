@@ -1,0 +1,6 @@
+<http://www.example.com#richard> <http://www.example.com#firstName> "Richard" .
+<http://www.example.com#richard> <http://www.example.com#lastName> "Degenne" .
+<http://www.example.com#richard> <http://www.example.com#bio> "French developer\nHe is cool"@en .
+<http://www.example.com#richard> <http://www.example.com#birthday> "1995-11-19T06:10:00Z"^^<http://www.example.com#dateTime> .
+<http://www.example.com#richard> <http://www.example.com#address> _:place .
+_:place <http://www.example.com#city> <http://www.example.com#clermont-ferrand> .

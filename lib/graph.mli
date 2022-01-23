@@ -1,1 +1,1 @@
-include Set.S with type elt = Triple.t
+include Set.S with type elt := Triple.t

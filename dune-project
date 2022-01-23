@@ -27,3 +27,5 @@
     dune
   )
 )
+
+(using menhir 2.1)
