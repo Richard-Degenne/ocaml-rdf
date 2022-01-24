@@ -22,6 +22,7 @@
   (depends
     (ocaml (>= 4.02.3))
     (alcotest :with-test)
+    menhir
     uri
     uuidm
     dune
