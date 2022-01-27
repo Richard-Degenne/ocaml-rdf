@@ -1,0 +1,5 @@
+(menhir
+  (modules ntriples_parser)
+)
+
+(ocamllex ntriples_lexer)

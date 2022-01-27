@@ -11,6 +11,7 @@ bug-reports: "https://github.com/Richard-Degenne/ocaml-rdf/issues"
 depends: [
   "ocaml" {>= "4.02.3"}
   "alcotest" {with-test}
+  "menhir"
   "uri"
   "uuidm"
   "dune" {>= "2.9"}
