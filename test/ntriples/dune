@@ -1,0 +1,8 @@
+(data_only_dirs data)
+
+(alias
+  (name runtest)
+  (deps (source_tree data))
+)
+
+; FIXME: For some reason, dune does not rerun the test executable when data files change.

@@ -9,16 +9,15 @@ let read_lexbuf lexbuf =
   try Ntriples_parser.doc Ntriples_lexer.read lexbuf with
     | Ntriples_parser.Error ->
         raise (
-          ParseError (Printf.sprintf "%s: syntax error\n" (position lexbuf))
+          ParseError (Printf.sprintf "%s: syntax error" (position lexbuf))
         )
     | Ntriples_lexer.SyntaxError msg ->
         raise (
-          ParseError (Printf.sprintf "%s: %s\n" (position lexbuf) msg)
+          ParseError (Printf.sprintf "%s: %s" (position lexbuf) msg)
         )
 
-let read inx =
-  let lexbuf = Lexing.from_channel inx in
-  read_lexbuf lexbuf
+let read source =
+  Lexing.from_string source |> read_lexbuf
 
 let read_file filename =
   filename |> open_in |> Lexing.from_channel |> read_lexbuf

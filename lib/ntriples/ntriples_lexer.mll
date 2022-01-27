@@ -19,7 +19,7 @@ let literal = ([^'"' '\\' '\n' '\r'] | unicode_seq | escape_seq)*
 let bnode_label = ['a'-'z' 'A'-'Z' '0'-'9' '_' ':']+ (* TODO: Follow spec more strictly *)
 let lang_tag = ['a'-'z' 'A'-'Z']+ ('-' ['a'-'z' 'A'-'Z' '0'-'9']+)*
 
-(* TODO: Handle escape sequences and Unicode sequences *)
+(* TODO: Handle Unicode sequences *)
 
 rule read = parse
 | '<' { read_iri lexbuf }
@@ -39,7 +39,7 @@ and read_iri = parse
 | eof { raise (SyntaxError "Unterminated IRI") }
 
 and read_literal = parse
-| (literal as l) '"' { LITERAL l }
+| (literal as l) '"' { LITERAL (Scanf.unescaped l) }
 | _ { raise (SyntaxError "Ill-formed literal") }
 | eof { raise (SyntaxError "Unterminated literal") }
 
