@@ -35,19 +35,16 @@ let to_string = value
 
 let of_string ?language value =
   let datatype = match language with
-    | None -> Iri.of_string "http://www.w3.org/2001/XMLSchema#string"
+    | None -> Xsd.string
     | Some _ -> lang_string
   in
   create ?language value datatype
 
 let of_int value =
-  create (string_of_int value)
-    (Iri.of_string "http://www.w3.org/2001/XMLSchema#integer")
+  create (string_of_int value) Xsd.integer
 
 let of_float value =
-  create (string_of_float value)
-    (Iri.of_string "http://www.w3.org/2001/XMLSchema#double")
+  create (string_of_float value) Xsd.double
 
 let of_bool value =
-  create (string_of_bool value)
-    (Iri.of_string "http://www.w3.org/2001/XMLSchema#boolean")
+  create (string_of_bool value) Xsd.boolean

@@ -21,3 +21,31 @@ let read source =
 
 let read_file filename =
   filename |> open_in |> Lexing.from_channel |> read_lexbuf
+
+let write_iri i =
+  "<" ^ Iri.to_string i ^ ">"
+
+let write_literal l =
+  let base_value = "\"" ^ (Literal.value l |> String.escaped) ^ "\"" in
+
+  match Literal.language l with
+  | Some lang -> base_value ^ "@" ^ lang
+  | None -> let datatype = Literal.datatype l in
+    if datatype = Xsd.string then
+      base_value
+    else
+      base_value ^ "^^" ^ (write_iri datatype)
+
+let write_term = function
+| #Iri.t as i -> write_iri i
+| #Bnode.t as b -> Bnode.to_string b
+| #Literal.t as l -> write_literal l
+
+let write_triple t =
+  let s = Triple.subject t in
+  let p = Triple.predicate t in
+  let o = Triple.object_ t in
+  (write_term s) ^ " " ^ (write_term p) ^ " " ^ (write_term o) ^ " .\n"
+
+let write graph =
+  Graph.elements graph |> List.map write_triple |> String.concat ""

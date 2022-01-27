@@ -56,6 +56,51 @@ let test_read_file_grammar () =
   let graph () = Ntriples.read_file (data_file_path "data/grammar_error.nt") in
   Alcotest.check_raises "Syntax error" (Ntriples.ParseError ":1:10: syntax error") (fun () -> ignore (graph ()))
 
+let test_write_iris () =
+  let s = Iri.of_string "http://a" in
+  let p = Iri.of_string "http://b" in
+  let o = Iri.of_string "http://c" in
+  let t = Triple.create s p o in
+  let g = Graph.of_list [t] in
+  Alcotest.(check string) "right triple" "<http://a> <http://b> <http://c> .\n"
+    (Ntriples.write g)
+
+let test_write_bnodes () =
+  let s = Bnode.of_string "a" in
+  let p = Iri.of_string "http://b" in
+  let o = Bnode.of_string "c" in
+  let t = Triple.create s p o in
+  let g = Graph.of_list [t] in
+  Alcotest.(check string) "right triple" "_:a <http://b> _:c .\n"
+    (Ntriples.write g)
+
+let test_write_string () =
+  let s = Bnode.of_string "a" in
+  let p = Iri.of_string "http://b" in
+  let o = Literal.of_string "c" in
+  let t = Triple.create s p o in
+  let g = Graph.of_list [t] in
+  Alcotest.(check string) "right triple" "_:a <http://b> \"c\" .\n"
+    (Ntriples.write g)
+
+let test_write_lang_string () =
+  let s = Bnode.of_string "a" in
+  let p = Iri.of_string "http://b" in
+  let o = Literal.of_string "c" ~language: "en" in
+  let t = Triple.create s p o in
+  let g = Graph.of_list [t] in
+  Alcotest.(check string) "right triple" "_:a <http://b> \"c\"@en .\n"
+    (Ntriples.write g)
+
+let test_write_datatype () =
+  let s = Bnode.of_string "a" in
+  let p = Iri.of_string "http://b" in
+  let o = Literal.of_int 42 in
+  let t = Triple.create s p o in
+  let g = Graph.of_list [t] in
+  Alcotest.(check string) "right triple" "_:a <http://b> \"42\"^^<http://www.w3.org/2001/XMLSchema#integer> .\n"
+    (Ntriples.write g)
+
 let test_suite = [
   "read cardinal", `Quick, test_read_cardinal;
   "read subject", `Quick, test_read_subject;
@@ -65,4 +110,9 @@ let test_suite = [
   "read_file cardinal", `Quick, test_read_file_cardinal;
   "read_file syntax error", `Quick, test_read_file_syntax;
   "read_file grammar error", `Quick, test_read_file_grammar;
+  "write iris", `Quick, test_write_iris;
+  "write bnodes", `Quick, test_write_bnodes;
+  "write string", `Quick, test_write_string;
+  "write lang_string", `Quick, test_write_lang_string;
+  "write datatype", `Quick, test_write_datatype
 ]
