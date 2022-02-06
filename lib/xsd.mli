@@ -1,3 +1,9 @@
+(**
+  XML Schema Definition (XSD) contains standard datatypes for literals.
+
+  @see <https://www.w3.org/TR/2012/REC-xmlschema11-2-20120405/datatypes.html#built-in-datatypes>
+*)
+
 val any_uri : Iri.t
 val base64_binary : Iri.t
 val boolean : Iri.t
