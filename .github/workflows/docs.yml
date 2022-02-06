@@ -1,0 +1,33 @@
+---
+on:
+  push:
+    branches:
+      - master
+      - dev
+      - docs # TODO: Remove this when the documentation CI works
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Cache OCaml
+        id: cache-ocaml
+        uses: actions/cache@v2
+        with:
+          path: ~/.opam
+          key: ${{ runner.os }}-ocaml
+      - name: Set up OCaml
+        if: steps.cache-ocaml.outputs.cache-hit != true
+        uses: ocaml/setup-ocaml@v1.1.11
+      - run: opam install . --deps-only --with-doc
+        name: Install dependencies
+      - run: opam exec -- dune build @doc
+        name: Build docs
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4.2.3
+        with:
+          branch: gh-pages
+          folder: _build/default/_doc/_html
+          target-folder: /
