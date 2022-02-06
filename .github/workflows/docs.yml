@@ -4,7 +4,6 @@ on:
     branches:
       - master
       - dev
-      - docs # TODO: Remove this when the documentation CI works
 
 jobs:
   build:
@@ -17,7 +16,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.opam
-          key: ${{ runner.os }}-ocaml
+          key: ${{ runner.os }}-ocaml-docs
       - name: Set up OCaml
         if: steps.cache-ocaml.outputs.cache-hit != true
         uses: ocaml/setup-ocaml@v1.1.11
