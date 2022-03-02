@@ -8,15 +8,15 @@
 
 exception ParseError of string
 
-val read : string -> Graph.t
+val read : string -> Rdf.Graph.t
 
 (**
   Reads a graph from a file.
 
   @param path Path to the file to read.
 *)
-val read_file : string -> Graph.t
+val read_file : string -> Rdf.Graph.t
 
 (** {1 Serialization} *)
 
-val write : Graph.t -> string
+val write : Rdf.Graph.t -> string

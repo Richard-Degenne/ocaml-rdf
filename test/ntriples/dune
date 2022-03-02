@@ -1,8 +1,13 @@
 (data_only_dirs data)
 
-(alias
+(executable
   (name runtest)
-  (deps (source_tree data))
+  (libraries alcotest ntriples)
 )
 
+(rule
+  (alias runtest)
+  (deps (source_tree data) runtest.exe)
+  (action (run ./runtest.exe))
+)
 ; FIXME: For some reason, dune does not rerun the test executable when data files change.

@@ -1,3 +1,7 @@
+%{
+  open Rdf
+%}
+
 %token <string> IRI
 
 %token <string> LITERAL
