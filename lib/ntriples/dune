@@ -3,3 +3,9 @@
 )
 
 (ocamllex ntriples_lexer)
+
+; (rule
+;   (deps ntriples_lexer.ml)
+;   (target ntriples_lexer.cma)
+;   (action (run %{ocamlc} ntriples_lexer.ml str.cma -o %{target}))
+; )

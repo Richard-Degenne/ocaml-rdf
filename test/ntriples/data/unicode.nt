@@ -1,0 +1,3 @@
+<http://www.example.com#🐒> <http://www.example.com#❤️> <http://www.example.com#🍌> .
+<http://www.example.com#🐒> <http://www.example.com#❤️> "🍌" .
+<http://www.example.com#🐒> <http://www.example.com#name> "M\u00e9lanie" .

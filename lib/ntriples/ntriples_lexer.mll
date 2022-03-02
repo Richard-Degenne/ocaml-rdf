@@ -2,6 +2,25 @@
   open Ntriples_parser
 
   exception SyntaxError of string
+
+(**
+  Replaces Unicode escape sequences with their actual characters.
+*)
+  let unicode_unescape s =
+    let re = Str.regexp "\\u([0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F])" in
+    let int_of_hex s = int_of_string ("0x" ^ s) in
+    let id_of_escape_seq s =
+      let id_len =
+        match String.get s 1 with
+        | 'u' -> 4
+        | 'U' -> 8
+        | _ -> failwith "Unknown Unicode escape sequence"
+      in
+      String.sub s 2 id_len
+    in
+    let uchar_of_id s = id_of_escape_seq s |> int_of_hex |> Uchar.of_int |> Uchar.to_char |> Char.escaped in
+
+    Str.global_substitute re uchar_of_id s
 }
 
 let white = [' ' '\t']+
@@ -34,12 +53,12 @@ rule read = parse
 | eof { EOF }
 
 and read_iri = parse
-| (iri as i) '>' { IRI i }
+| (iri as i) '>' { IRI (unicode_unescape i) }
 | _ { raise (SyntaxError "Ill-formed IRI") }
 | eof { raise (SyntaxError "Unterminated IRI") }
 
 and read_literal = parse
-| (literal as l) '"' { LITERAL (Scanf.unescaped l) }
+| (literal as l) '"' { LITERAL (unicode_unescape l |> Scanf.unescaped) }
 | _ { raise (SyntaxError "Ill-formed literal") }
 | eof { raise (SyntaxError "Unterminated literal") }
 
